@@ -20,6 +20,9 @@ var Enemy = function(x,y) {
     this.speed = Math.floor((Math.random() * 300) *2);
     //Math.floor() - returns the largest integer less than or equal to a given number
     //Math.random() - returns a pseudo random number in the range from 0-1
+    //Set enemy width & height
+    this.w = 101;
+    this.h = 171;
 };
 
 // Update the enemy's position (required)
@@ -46,6 +49,9 @@ var Player = function(x,y) {
     //Set player's initial location
     this.x = x;
     this.y = y;
+    //Set player's width & height
+    this.w = 101;
+    this.h = 171;
     //boundaries
     this.boundary = {
         left: 0,
@@ -111,24 +117,57 @@ Player.prototype.update = function() {
     this.y = this.y;
 };
 
+/*Player.prototype.checkCollision = function() { - Attempt 1
+  //check collisions!
+  for (var i = 0; i < allEnemies.length; i++) {
+    var enemy = allEnemies[i];
+    if (this.x < (enemy.x + enemy.w) &&
+        (this.x + this.w) > enemy.x &&
+        this.y < enemy.y + enemy.h &&
+        (this.h + player.y) > enemy.y) {
+            this.reset();
+            console.log('Smoosh!');
+        }
+    }
+};*/
+
+/*Player.prototype.checkCollision = function() { - Attempt 2
+    for (var i = 0; i < allEnemies.length; i++) {
+        if (this.x >= enemy.x + 0 &&
+        this.x < enemy.x + 171 &&
+        this.y >= enemy.y + 0 &&
+        this.y < enemy.y + 101) {
+          this.reset();
+          console.log('Crunch!');
+        }
+    }
+};*/
+
+/*Player.prototype.checkCollision = function() { - Attempt 3
+    if (player.x < enemy.x + enemy.w &&
+        player.x + player.w > enemy.x &&
+        player.y < enemy.y + enemy.h &&
+        player.h + player.y > enemy.y) {
+            this.reset();
+            console.log('Crunch!');
+    }
+};*/
+
 Player.prototype.reset = function() {
     //If the player hits water, the game resets and the player should move back to their initial location
     this.x = 200;
     this.y = 400;
 };
 
-/*Player.prototype.checkCollisions = function() {//example collision code, why you no worky?
-  var enemy = allEnemies[i];
-  for (var i = 0; i < allEnemies.length; i++) {
-    /*add calculation to determine row*
-    if (this.x >= enemy.x + 0 &&
-        this.x < enemy.x + 100 &&
-        this.y >= enemy.y + 0 &&
-        this.y < enemy.y + 85) {
-          console.log('Splat!');
-        }
+Player.prototype.checkCollision = function() {
+    if(player.x < enemy.x + enemy.w &&
+       player.x + player.w > enemy.x &&
+       player.y < enemy.y + enemy.h &&
+       player.y + player.h > enemy.y) {
+        this.reset();
+        consol.log('Crrnnnchh!');
     }
-};*/
+};
 
 //---------------------------------- EVENT HANDLERS ---------------------------------
 // This listens for key presses and sends the keys to your
@@ -148,33 +187,22 @@ document.addEventListener('keyup', function(e) {
 // Now instantiate your objects.
 // ENEMIES - Place all enemy objects in an array called "allEnemies"
 
-var allEnemies = [
+var allEnemies = []; //- collision loop
+for (var i = 0; i < 3; i++) {
+  //var bugSpeed = Math.floor(Math.random() * 5 + 1) * 99;
+  enemy = new Enemy();
+  allEnemies.push(new Enemy(-enemy.w, (50 + (90 * i)), enemy.speed));
+}
+
+/*var allEnemies = [
     new Enemy(10,20),
     new Enemy(0,60),
     new Enemy(100, 100),
     new Enemy(-20, 200)
 
-];
+];*/
 
-/*// Set a varaiable for the possible y values
-var yBugs = [60, 140, 220];//Bug position y-values
 
-// Create the separate enemy instances
-for (var i = 0; i < 5; i++) {
-
-    // Set a starting x-position based on a random value
-    var x = Math.floor((Math.random() * -1000) + 1);
-
-    // Set a starting y-position based on a random selection
-    // of the 3 possible values
-    var y = yBugs[Math.floor(Math.random() * 3)];
-
-    // Create the new enemy object
-    var enemy = new Enemy(x, y);
-
-    // Push the enemy into the array
-    allEnemies.push(enemy);
-}*/
 // PLAYER - place the player object in a variable called "player"
 var player = new Player(200,400);
 
