@@ -177,7 +177,7 @@ Player.prototype.reset = function() {
     }
 };*/
 
-Player.prototype.checkCollision = function crash() {//Bounding box- WTF?
+Player.prototype.checkCollision = function () {//Bounding box- WTF?
     if((player.x + player.w) >= (Enemy.x) &&
         (player.x) <= (Enemy.x + Enemy.w) &&
         (player.y + player.h) >= (Enemy.y) &&
@@ -185,8 +185,6 @@ Player.prototype.checkCollision = function crash() {//Bounding box- WTF?
         console.log('Splat!');
     }
 };
-
-Player.crash;
 
 
 
