@@ -123,7 +123,7 @@ Player.prototype.reset = function() {
     this.y = 400;
 };
 
-Player.prototype.checkCollisions = function (enemy) {//- Attempt 5: Ty's suggestion
+Player.prototype.checkCollisions = function () {//- Attempt 5: Ty's suggestion
     if(Math.abs(player.x - enemy.x) < player.w &&//was Enemy.x
        Math.abs(player.y - enemy.y) < player.h) {
         this.reset();
@@ -158,12 +158,13 @@ document.addEventListener('keyup', function(e) {
 // Now instantiate your objects.
 // ENEMIES - Place all enemy objects in an array called "allEnemies"
 
-var allEnemies = []; //- enemy loop
-for (var i = 0; i < 3; i++) {
-  //var bugSpeed = Math.floor(Math.random() * 5 + 1) * 99;
-  enemy = new Enemy();
-  allEnemies.push(new Enemy(-enemy.w, (50 + (90 * i)), enemy.speed));
-};
+var allEnemies = [
+    new Enemy(10,20),
+    new Enemy(0,60),
+    new Enemy(100, 100),
+    new Enemy(-20, 200)
+
+];
 
 
 // PLAYER - place the player object in a variable called "player"

@@ -95,7 +95,7 @@ var Engine = (function(global) {
         allEnemies.forEach(function() {
             enemy.update(dt);
         });
-        player.checkCollisions(enemy);
+        player.checkCollisions();
 
     }
 
