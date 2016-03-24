@@ -17,7 +17,7 @@ var Enemy = function(x,y) {
     this.x = x;
     this.y = y;
     //Set enemmy's speed with Math.random()
-    this.speed = Math.floor((Math.random() * 300) *2);
+    this.speed = Math.floor((Math.random() * 200) *2);
     //Math.floor() - returns the largest integer less than or equal to a given number
     //Math.random() - returns a pseudo random number in the range from 0-1
     //Set enemy width & height
@@ -57,7 +57,7 @@ var Player = function(x,y,crash) {
         left: 0,
         right: 400,
         bottom: 400,
-        top: 0
+        //top: 0
     };
     //moves
     this.moves = {
@@ -123,22 +123,13 @@ Player.prototype.reset = function() {
     this.y = 400;
 };
 
-Player.prototype.checkCollisions = function () {//- Attempt 5: Ty's suggestion
-    if(Math.abs(player.x - enemy.x) < player.w &&//was Enemy.x
-       Math.abs(player.y - enemy.y) < player.h) {
+Player.prototype.checkCollisions = function (enemy) {//- Attempt 5: Ty's suggestion
+    if(Math.abs(player.x - enemy.x) < 80 &&//was Enemy.x
+       Math.abs(player.y - enemy.y) < 80) {
         this.reset();
         console.log('Crrunnnchh!');
     }
 };
-
-/*Player.prototype.checkCollision = function() {//- Attempt 6: Bounding box- WTF?
-    if((player.x + player.w) >= (Enemy.x) &&
-        (player.x) <= (Enemy.x + Enemy.w) &&
-        (player.y + player.h) >= (Enemy.y) &&
-        (player.x) <= (Enemy.y + Enemy.h)) {
-        console.log('Splat!');
-    }
-};*/
 
 //---------------------------------- EVENT HANDLERS ---------------------------------
 // This listens for key presses and sends the keys to your
@@ -158,13 +149,12 @@ document.addEventListener('keyup', function(e) {
 // Now instantiate your objects.
 // ENEMIES - Place all enemy objects in an array called "allEnemies"
 
-var allEnemies = [
-    new Enemy(10,20),
-    new Enemy(0,60),
-    new Enemy(100, 100),
-    new Enemy(-20, 200)
+var allEnemies = [];
 
-];
+allEnemies.push(new Enemy(-50,60));
+allEnemies.push(new Enemy(0,120));
+allEnemies.push(new Enemy(-20,200))
+
 
 
 // PLAYER - place the player object in a variable called "player"

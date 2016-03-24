@@ -92,10 +92,11 @@ var Engine = (function(global) {
      */
     function updateEntities(dt) {
         player.update();
-        allEnemies.forEach(function() {
+        allEnemies.forEach(function(enemy) {
             enemy.update(dt);
+            player.checkCollisions(enemy);
         });
-        player.checkCollisions();
+
 
     }
 
