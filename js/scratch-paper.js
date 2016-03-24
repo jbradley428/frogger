@@ -117,28 +117,78 @@ Player.prototype.update = function() {
     this.y = this.y;
 };
 
+/*Player.prototype.checkCollision = function() { - Attempt 1
+  //check collisions!
+  for (var i = 0; i < allEnemies.length; i++) {
+    var enemy = allEnemies[i];
+    if (this.x < (enemy.x + enemy.w) &&
+        (this.x + this.w) > enemy.x &&
+        this.y < enemy.y + enemy.h &&
+        (this.h + player.y) > enemy.y) {
+            this.reset();
+            console.log('Smoosh!');
+        }
+    }
+};*/
+
+/*Player.prototype.checkCollision = function() { - Attempt 2
+    for (var i = 0; i < allEnemies.length; i++) {
+        if (this.x >= enemy.x + 0 &&
+        this.x < enemy.x + 171 &&
+        this.y >= enemy.y + 0 &&
+        this.y < enemy.y + 101) {
+          this.reset();
+          console.log('Crunch!');
+        }
+    }
+};*/
+
+/*Player.prototype.checkCollision = function() { - Attempt 3
+    if (player.x < enemy.x + enemy.w &&
+        player.x + player.w > enemy.x &&
+        player.y < enemy.y + enemy.h &&
+        player.h + player.y > enemy.y) {
+            this.reset();
+            console.log('Crunch!');
+    }
+};*/
+
 Player.prototype.reset = function() {
     //If the player hits water, the game resets and the player should move back to their initial location
     this.x = 200;
     this.y = 400;
 };
 
-Player.prototype.checkCollision = function crash() {//- Attempt 5: Ty's suggestion
+/*Player.prototype.checkCollision = function() {//- Attempt 4
+    if(player.x < enemy.x + enemy.w &&
+       player.x + player.w > enemy.x &&
+       player.y < enemy.y + enemy.h &&
+       player.y + player.h > enemy.y) {
+        this.reset();
+        consol.log('Crrnnnchh!');
+    }
+};*/
+
+/*Player.prototype.checkCollision = function crash() {//- Attempt 5: Ty's suggestion
     if(Math.abs(player.x - Enemy.x) < player.w &&
        Math.abs(player.y - Enemy.y) < player.h) {
         this.reset();
         console.log('Crrnnnchh!');
     }
-};
+};*/
 
-/*Player.prototype.checkCollision = function() {//- Attempt 6: Bounding box- WTF?
+Player.prototype.checkCollision = function crash() {//Bounding box- WTF?
     if((player.x + player.w) >= (Enemy.x) &&
         (player.x) <= (Enemy.x + Enemy.w) &&
         (player.y + player.h) >= (Enemy.y) &&
         (player.x) <= (Enemy.y + Enemy.h)) {
         console.log('Splat!');
     }
-};*/
+};
+
+Player.crash;
+
+
 
 //---------------------------------- EVENT HANDLERS ---------------------------------
 // This listens for key presses and sends the keys to your
@@ -158,6 +208,13 @@ document.addEventListener('keyup', function(e) {
 // Now instantiate your objects.
 // ENEMIES - Place all enemy objects in an array called "allEnemies"
 
+/*var allEnemies = []; //- enemy loop
+for (var i = 0; i < 3; i++) {
+  //var bugSpeed = Math.floor(Math.random() * 5 + 1) * 99;
+  enemy = new Enemy();
+  allEnemies.push(new Enemy(-enemy.w, (50 + (90 * i)), enemy.speed));
+};*/
+
 var allEnemies = [
     new Enemy(10,20),
     new Enemy(0,60),
@@ -169,3 +226,6 @@ var allEnemies = [
 
 // PLAYER - place the player object in a variable called "player"
 var player = new Player(200,400);
+
+// -- Instantiate the game --
+//var game = new Game();
