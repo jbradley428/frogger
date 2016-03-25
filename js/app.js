@@ -4,6 +4,10 @@
 //  - height: 606
 // Create the game constructor to store the game variables
 
+//--------------------------------- GLOBAL VARIABLES --------------------------------
+var tileWidth = 80;
+var tileHeight = 80;
+
 //------------------------------------- ENEMIES -------------------------------------
 //Enemy constructor function
 var Enemy = function(x,y) {
@@ -18,8 +22,8 @@ var Enemy = function(x,y) {
     //Math.floor() - returns the largest integer less than or equal to a given number
     //Math.random() - returns a pseudo random number in the range from 0-1
     //Set enemy width & height
-    this.w = 80;//101
-    this.h = 80;//171
+    this.w = tileWidth;//80
+    this.h = tileHeight;//80
 };
 
 // Update the enemy's position (required)
@@ -38,7 +42,7 @@ Enemy.prototype.render = function() {
 
 //------------------------------------- PLAYER -------------------------------------
 // This class requires an update(), render() and a handleInput() method.
-var Player = function(x,y,crash) {
+var Player = function(x,y) {
     //Load the player image
     this.sprite = 'images/char-cat-girl.png';
     //Set player's initial location
@@ -92,9 +96,8 @@ Player.prototype.handleInput = function(allowedKeys) {
             this.y -= this.moves.goUp;
             if (this.y < this.boundary.top) { //if the amt subtracted falls below zero
                 this.y += this.moves.goUp;    //add back the value of goUp
-            }else if (this.y < 0){            //resets player to start position when she hits water
+            }else if (this.y < 0){            //resets player to start position when she hits water.
                 this.reset();
-                console.log("You Won!");
             }
             break;
 
@@ -120,10 +123,9 @@ Player.prototype.reset = function() {
 
 
 Player.prototype.checkCollisions = function (enemy) {
-    if(Math.abs(player.x - enemy.x) < enemy.w &&//If the absolute value of the difference between player and enemy x-positions is less than 80 (enemy width), and
-       Math.abs(player.y - enemy.y) < enemy.h) {//the absolute value of the difference between player and enemy y-positions is less than 80 (enemy height):
-        this.reset();                           // - return the player to her original position (200, 400),
-        console.log('Crash!');                  // - log "Crash!" in the console.
+    if(Math.abs(this.x - enemy.x) < enemy.w &&//If the absolute value of the difference between player and enemy x-positions is less than 80 (enemy width), and
+       Math.abs(this.y - enemy.y) < enemy.h) {//the absolute value of the difference between player and enemy y-positions is less than 80 (enemy height):
+        this.reset();                           // - return the player to her original position (200, 400).
     }
 };
 
