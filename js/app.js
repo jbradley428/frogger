@@ -3,35 +3,31 @@
 //  - width: 505
 //  - height: 606
 // Create the game constructor to store the game variables
-var Game = function() {
-};
 
 //------------------------------------- ENEMIES -------------------------------------
 //Enemy constructor function
 var Enemy = function(x,y) {
-    // Variables applied to each of our instances go here, we've provided one for you to get started
-    //
-    // The image/sprite for our enemies, this uses a helper we've provided to easily load images
+    //Variables applied to each of our instances go here, we've provided one for you to get started
+    //The image/sprite for our enemies, this uses a helper we've provided to easily load images
     this.sprite = 'images/enemy-bug.png';
     //Set enemy's initial location
     this.x = x;
     this.y = y;
     //Set enemmy's speed with Math.random()
-    this.speed = Math.floor((Math.random() * 200) *2);
+    this.speed = Math.floor((Math.random() * 100) *2);
     //Math.floor() - returns the largest integer less than or equal to a given number
     //Math.random() - returns a pseudo random number in the range from 0-1
     //Set enemy width & height
-    this.w = 101;
-    this.h = 171;
+    this.w = 80;//101
+    this.h = 80;//171
 };
 
 // Update the enemy's position (required)
 Enemy.prototype.update = function(dt) {
     // Multiply any movement by the dt parameter, which will ensure the game runs at the same speed for all computers.
-    //this.x = this.x * dt * this.speed + 22; - my code
-    this.x = this.x + this.speed * dt;//this (the bug's) x-coord is equal to the bug's original x-coord multiplied by its speed multiplied by delta
+    this.x = this.x + this.speed * dt;//this (the bug's) x-coord is equal to the bug's original x-coord added to speed multiplied by delta
     if (this.x > 500) {//if the x-coord is less than 500
-        this.x = -100;//the x-coord is equal to -100, meaning the bug is set offscreen to the left
+        this.x = -100;//the x-coord is equal to -100, meaning the bug is set offscreen to the left.
     }
 };
 
@@ -41,11 +37,10 @@ Enemy.prototype.render = function() {
 };
 
 //------------------------------------- PLAYER -------------------------------------
-// Now write your own player class
 // This class requires an update(), render() and a handleInput() method.
 var Player = function(x,y,crash) {
     //Load the player image
-    this.sprite = 'images/char-cat-girl.png';//images/char-cat-girl.png
+    this.sprite = 'images/char-cat-girl.png';
     //Set player's initial location
     this.x = x;
     this.y = y;
@@ -56,8 +51,7 @@ var Player = function(x,y,crash) {
     this.boundary = {
         left: 0,
         right: 400,
-        bottom: 400,
-        //top: 0
+        bottom: 400
     };
     //moves
     this.moves = {
@@ -77,12 +71,11 @@ Player.prototype.handleInput = function(allowedKeys) {
     //Receives user input via allowed keys & moves player accordingly
     //Need left, right, up & down
     //Player can NOT move off screen
-    //If player hits water the game resets by moving the player back to initial location (write a separate reset Player method to handle that - see below).
-    //CASE
+    //If player hits water the game resets by moving the player back to initial location.
     switch (allowedKeys) {
 
         case 'left':
-            this.x -= this.moves.goLeft;//this.spriteInfo.move.rightLeft
+            this.x -= this.moves.goLeft;
             if (this.x < this.boundary.left) {
                 this.x += this.moves.goLeft;
             }
@@ -97,8 +90,11 @@ Player.prototype.handleInput = function(allowedKeys) {
 
         case 'up':
             this.y -= this.moves.goUp;
-            if (this.y < this.boundary.top) {//if the amt subtracted falls below zero
-                this.y += this.moves.goUp;//add back the value of goUp
+            if (this.y < this.boundary.top) { //if the amt subtracted falls below zero
+                this.y += this.moves.goUp;    //add back the value of goUp
+            }else if (this.y < 0){            //resets player to start position when she hits water
+                this.reset();
+                console.log("You Won!");
             }
             break;
 
@@ -116,18 +112,18 @@ Player.prototype.update = function() {
     this.x = this.x;
     this.y = this.y;
 };
-
+// Return player to her initial position if she reaches rhe water or collides with an enemy
 Player.prototype.reset = function() {
-    //If the player hits water, the game resets and the player should move back to their initial location
-    this.x = 200;
-    this.y = 400;
+    this.x = 200;//x-position
+    this.y = 400;//y-position
 };
 
-Player.prototype.checkCollisions = function (enemy) {//- Attempt 5: Ty's suggestion
-    if(Math.abs(player.x - enemy.x) < 80 &&//was Enemy.x
-       Math.abs(player.y - enemy.y) < 80) {
-        this.reset();
-        console.log('Crrunnnchh!');
+
+Player.prototype.checkCollisions = function (enemy) {
+    if(Math.abs(player.x - enemy.x) < enemy.w &&//If the absolute value of the difference between player and enemy x-positions is less than 80 (enemy width), and
+       Math.abs(player.y - enemy.y) < enemy.h) {//the absolute value of the difference between player and enemy y-positions is less than 80 (enemy height):
+        this.reset();                           // - return the player to her original position (200, 400),
+        console.log('Crash!');                  // - log "Crash!" in the console.
     }
 };
 
@@ -146,14 +142,13 @@ document.addEventListener('keyup', function(e) {
 });
 
 //------------------------------- INSTANTIATE OBJECTS -------------------------------
-// Now instantiate your objects.
 // ENEMIES - Place all enemy objects in an array called "allEnemies"
 
 var allEnemies = [];
 
-allEnemies.push(new Enemy(-50,60));
-allEnemies.push(new Enemy(0,120));
-allEnemies.push(new Enemy(-20,200))
+allEnemies.push(new Enemy(-50,60)); //top enemy
+allEnemies.push(new Enemy(0,120));  //middle enemy
+allEnemies.push(new Enemy(-20,200)) //bottom enemy
 
 
 
